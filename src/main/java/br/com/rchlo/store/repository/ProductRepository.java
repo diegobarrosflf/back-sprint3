@@ -17,7 +17,7 @@ public class ProductRepository {
     }
 
     public List<Product> findAllByOrderByName() {
-        return entityManager.createQuery("select p from Product p", Product.class).getResultList();
+        return entityManager.createQuery("select p from Product p ORDER BY p.name", Product.class).getResultList();
     }
 
     public List<ProductByColorDto> productsByColor() {
