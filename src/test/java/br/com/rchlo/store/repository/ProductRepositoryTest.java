@@ -3,22 +3,18 @@ package br.com.rchlo.store.repository;
 import br.com.rchlo.store.domain.Color;
 import br.com.rchlo.store.domain.Product;
 import br.com.rchlo.store.dto.ProductByColorDto;
-import br.com.rchlo.store.dto.ProductDto;
 import br.com.rchlo.store.repository.util.JPAUtil;
+import br.com.rchlo.store.repository.util.builder.ProductBuilder;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import javax.persistence.EntityManager;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ProductRepositoryTest {
 
@@ -71,15 +67,18 @@ class ProductRepositoryTest {
 
     @Test
     void  shouldListProductsQuantityByColorWhenTheListHaveTwoColorsOrMore(){
-        entityManager.persist(new Product(233L,
-                "Jaqueta Puffer Juvenil Com Capuz Super Mario Branco",
-                "A Jaqueta Puffer Juvenil Com Capuz Super Mario Branco é confeccionada em material sintético.",
-                "jaqueta-puffer-juvenil-com-capuz-super-mario-branco-13834193_sku",
-                "Nintendo",
-                new BigDecimal("201.90"),
-                null,
-                Color.BLUE,
-                148));
+        Product product1 = new ProductBuilder()
+                .withCode(17L)
+                .withName("Jaqueta Teste Puffer Juvenil Com Capuz Super Mario Branco")
+                .withDescrption("A Jaqueta Puffer Juvenil Com Capuz Super Mario Branco é confeccionada em material sintético.")
+                .withSlug("jaqueta-puffer-juvenil-com-capuz-super-mario-branco-13834193_sku")
+                .withBrand("Nintendo")
+                .withPrice("190.90")
+                .withDiscount("190.90")
+                .withColor(Color.BLUE)
+                .withWeightInGrams(144)
+                .create();
+        entityManager.persist(product1);
 
         List<ProductByColorDto> products = productRepository.productsByColor();
 
@@ -93,24 +92,33 @@ class ProductRepositoryTest {
 
 
     private void populaProdutos(){
-        entityManager.persist(new Product(7L,
-                "Jaqueta Puffer Juvenil Com Capuz Super Mario Branco",
-                "A Jaqueta Puffer Juvenil Com Capuz Super Mario Branco é confeccionada em material sintético.",
-                "jaqueta-puffer-juvenil-com-capuz-super-mario-branco-13834193_sku",
-                "Nintendo",
-                new BigDecimal("199.90"),
-                null,
-                Color.WHITE,
-                147));
-        entityManager.persist(new Product(1L,
-                "Regata Infantil Mario Bros Branco",
-                "A Regata Infantil Mario Bros Branco é confeccionada em fibra natural. Aposte!",
-                "regata-infantil-mario-bros-branco-14040174_sku",
-                "Nintendo",
-                new BigDecimal("29.90"),
-                null,
-                Color.WHITE,
-                98));
+        Product product1 = new ProductBuilder()
+                .withCode(7L)
+                .withName("Jaqueta Puffer Juvenil Com Capuz Super Mario Branco")
+                .withDescrption("A Jaqueta Puffer Juvenil Com Capuz Super Mario Branco é confeccionada em material sintético.")
+                .withSlug("jaqueta-puffer-juvenil-com-capuz-super-mario-branco-13834193_sku")
+                .withBrand("Nintendo")
+                .withPrice("199.90")
+                .withDiscount("199.90")
+                .withColor(Color.WHITE)
+                .withWeightInGrams(147)
+                .create();
+
+        Product product2 = new ProductBuilder()
+                .withCode(1L)
+                .withName("Regata Infantil Mario Bros Branco")
+                .withDescrption("A Regata Infantil Mario Bros Branco é confeccionada em fibra natural. Aposte!")
+                .withSlug("regata-infantil-mario-bros-branco-14040174_sku")
+                .withBrand("Nintendo")
+                .withPrice("29.90")
+                .withDiscount("29.90")
+                .withColor(Color.WHITE)
+                .withWeightInGrams(98)
+                .create();
+
+        entityManager.persist(product1);
+        entityManager.persist(product2);
+
     }
 
 }
