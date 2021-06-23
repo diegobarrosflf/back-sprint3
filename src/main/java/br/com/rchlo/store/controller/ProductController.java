@@ -20,7 +20,10 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<ProductDto> products() {
-        return productRepository.findAllByOrderByName().stream().map(ProductDto::new).collect(Collectors.toList());
+        return productRepository.findAllProductsWithImageAndCategoryOrderByName()
+                .stream()
+                .map(ProductDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/reports/products/by-color")

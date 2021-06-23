@@ -24,4 +24,8 @@ public class ProductRepository {
         return entityManager.createQuery("select new br.com.rchlo.store.dto.ProductByColorDto(p.color, count(p)) from Product p group by p.color", ProductByColorDto.class).getResultList();
     }
 
+    public List<Product> findAllProductsWithImageAndCategoryOrderByName() {
+        return entityManager.createQuery("select distinct p from Product p JOIN FETCH p.images JOIN FETCH p.category ORDER BY p.name", Product.class).getResultList();
+    }
+
 }
