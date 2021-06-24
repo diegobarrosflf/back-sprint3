@@ -31,8 +31,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductImage> images = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @ManyToOne
     private Category category;
 
     @Enumerated(EnumType.STRING)

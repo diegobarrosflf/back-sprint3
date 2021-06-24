@@ -25,7 +25,10 @@ public class ProductRepository {
     }
 
     public List<Product> findAllProductsWithImageAndCategoryOrderByName() {
-        return entityManager.createQuery("select distinct p from Product p JOIN FETCH p.images JOIN FETCH p.category ORDER BY p.name", Product.class).getResultList();
+        return entityManager.createQuery("select distinct p from Product p" +
+                " LEFT JOIN FETCH p.images" +
+                " JOIN FETCH p.category" +
+                " ORDER BY p.name", Product.class).getResultList();
     }
 
 }
