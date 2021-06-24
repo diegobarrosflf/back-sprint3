@@ -32,6 +32,8 @@ public class ProductDto {
 
     private final List<ProductImageDto> productImageDtos;
 
+    private final List<ProductSizeDto> avalibleSizes;
+
     private final CategoryDto categoryDto;
 
 
@@ -51,6 +53,11 @@ public class ProductDto {
                 .getImages()
                 .stream()
                 .map(ProductImageDto::new)
+                .collect(Collectors.toList());
+        this.avalibleSizes = product
+                .getAvaliableSize()
+                .stream()
+                .map(ProductSizeDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -100,5 +107,9 @@ public class ProductDto {
 
     public CategoryDto getCategoryDto() {
         return categoryDto;
+    }
+
+    public List<ProductSizeDto> getAvalibleSizes() {
+        return avalibleSizes;
     }
 }

@@ -35,7 +35,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-//    private List<Size> availableSizes;
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
+    @CollectionTable(name = "product_available_sizes")
+    private List<Size> availableSizes = new ArrayList<>();
 
     /** @deprecated */
     protected Product() {
@@ -95,5 +98,9 @@ public class Product {
 
     public Category getCategory() {
         return category;
+    }
+
+    public List<Size> getAvaliableSize() {
+        return availableSizes;
     }
 }
