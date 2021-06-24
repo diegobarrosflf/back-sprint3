@@ -1,6 +1,7 @@
 package br.com.rchlo.store.controller;
 
 import br.com.rchlo.store.controller.form.PaymentForm;
+import br.com.rchlo.store.controller.handlers.ErroFormDto;
 import br.com.rchlo.store.domain.Payment;
 import br.com.rchlo.store.domain.PaymentStatus;
 import br.com.rchlo.store.dto.PaymentDto;
@@ -37,6 +38,9 @@ public class PaymentController {
 
     @PostMapping
     public ResponseEntity<PaymentDto> creatPayment(@RequestBody @Valid PaymentForm form, UriComponentsBuilder uriBuilder){
+        if(!form.dateValidation()){
+            return ResponseEntity.badRequest().build();
+        }
         Payment payment = form.convert();
         paymentRepository.save(payment);
 

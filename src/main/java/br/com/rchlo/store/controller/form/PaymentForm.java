@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,13 +81,24 @@ public class PaymentForm {
     }
 
     public Payment convert() {
-
         return new Payment(value, PaymentStatus.CREATED, new Card(
                 cardClientName,
                 cardNumber,
                 cardExpiration,
                 cardVerificationCode
         ));
+    }
+
+    public boolean dateValidation(){
+        Date today = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM");
+        try {
+            Date cardDate = df.parse(this.cardExpiration);
+            return cardDate.after(today);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
