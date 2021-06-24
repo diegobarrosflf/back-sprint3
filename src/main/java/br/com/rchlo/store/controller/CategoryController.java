@@ -20,7 +20,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public List<CategoryDto> categories(){
-        return categoryRepository.findAllByOrderByName().stream()
+        return categoryRepository.findAllByOrderByPosition().stream()
                 .map(CategoryDto::new)
                 .collect(Collectors.toList());
     }
