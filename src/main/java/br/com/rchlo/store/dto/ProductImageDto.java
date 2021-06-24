@@ -19,4 +19,5 @@ public class ProductImageDto {
     public Long getId() {
         return id;
     }
+
 }

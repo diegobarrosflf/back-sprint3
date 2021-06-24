@@ -26,7 +26,6 @@ class ProductRepositoryTest {
         this.entityManager = JPAUtil.getEntityManager();
         this.productRepository = new ProductRepository(this.entityManager);
         this.entityManager.getTransaction().begin();
-        populaProdutos();
     }
 
     @AfterEach
@@ -36,7 +35,7 @@ class ProductRepositoryTest {
 
     @Test
     void shouldListAllProductsOrderedByName() {
-
+        populaProdutos();
         List<Product> products = productRepository.findAllByOrderByName();
 
         assertEquals(2, products.size());
@@ -52,13 +51,14 @@ class ProductRepositoryTest {
 
     @Test
     void  listProductsQuantityByColorWhenTheListIsEmpty(){
-        this.entityManager.getTransaction().rollback();
+
         List<ProductByColorDto> productsByColor = productRepository.productsByColor();
         assertThat(productsByColor).isEmpty();
     }
 
     @Test
     void  shouldListProductsQuantityByColorWhenTheListHaveOnlyOneColor(){
+        populaProdutos();
         List<ProductByColorDto> products = productRepository.productsByColor();
         assertEquals(1, products.size());
         assertEquals(2, products.get(0).getAmount());
@@ -67,6 +67,7 @@ class ProductRepositoryTest {
 
     @Test
     void  shouldListProductsQuantityByColorWhenTheListHaveTwoColorsOrMore(){
+        populaProdutos();
         Product product1 = new ProductBuilder()
                 .withCode(17L)
                 .withName("Jaqueta Teste Puffer Juvenil Com Capuz Super Mario Branco")
