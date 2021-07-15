@@ -28,6 +28,7 @@ public class ProductRepository {
         return entityManager.createQuery("select distinct p from Product p" +
                 " LEFT JOIN FETCH p.images" +
                 " JOIN FETCH p.category" +
+                " LEFT JOIN FETCH p.availableSizes" +
                 " ORDER BY p.name", Product.class).getResultList();
     }
 

@@ -3,7 +3,9 @@ package br.com.rchlo.store.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -29,7 +31,7 @@ public class Product {
     private Integer weightInGrams;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImage> images = new ArrayList<>();
+    private Set<ProductImage> images = new HashSet<>();
 
     @ManyToOne
     private Category category;
@@ -37,7 +39,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @ElementCollection
     @CollectionTable(name = "product_available_sizes")
-    private List<Size> availableSizes = new ArrayList<>();
+    private Set<Size> availableSizes = new HashSet<>();
 
     /** @deprecated */
     protected Product() {
@@ -91,7 +93,7 @@ public class Product {
         return weightInGrams;
     }
 
-    public List<ProductImage> getImages() {
+    public Set<ProductImage> getImages() {
         return images;
     }
 
@@ -99,7 +101,7 @@ public class Product {
         return category;
     }
 
-    public List<Size> getAvaliableSize() {
+    public Set<Size> getAvaliableSize() {
         return availableSizes;
     }
 }
